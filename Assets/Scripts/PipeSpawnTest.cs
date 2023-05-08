@@ -5,12 +5,14 @@ using UnityEngine;
 public class PipeSpawnTest : MonoBehaviour
 {
     public GameObject pipePrefab;
-    public int numberOfPipes = 4;
+    public int numberOfPipes = 3;
     public float distanceBetweenPipes = 15f;
     public float pipeWidth = 2f;
     public float spawnXPosition = 15f;
     public float minYPosition = -4f;
     public float maxYPosition = 5f;
+
+    public float safeZoneWidth = 0.2f;
 
     private GameObject[] pipes;
     private int currentIndex = 0;
@@ -23,7 +25,7 @@ public class PipeSpawnTest : MonoBehaviour
         for (int i = 0; i < 3; i+=1)
         {
             //SpawnPipe(i);
-            Vector2 position = new Vector2(i*10+7, Random.Range(minYPosition, maxYPosition));
+            Vector2 position = new Vector2(i*10+6, Random.Range(minYPosition, maxYPosition));
             Quaternion rotation = Quaternion.identity;
             GameObject pipe = Instantiate(pipePrefab, position, rotation);
             pipes[i] = pipe;
@@ -46,19 +48,6 @@ public class PipeSpawnTest : MonoBehaviour
 
 
     }
-
-    //Tạo mới một đối tượng ống và đặt nó vào vị trí tiếp theo trong mảng pipes
-    private void SpawnPipe(int index)
-    {
-        Vector3 position = GetNextPosition();
-        //Gán không xoay cho ống
-        Quaternion rotation = Quaternion.identity;
-        //tạo mới một đối tượng ống prefab pipe với vị trí và hướng xoay được tính bằng hàm GNP
-        //các ống này được lưu trữ trong mảng pipes[] với chỉ số index
-        pipes[index] = Instantiate(pipePrefab, position, rotation);
-        pipes[index].GetComponentInChildren<PipeMove>().SetWidth(pipeWidth);
-    }
-
     //Ống tiếp theo
     private Vector3 GetNextPosition()
     {

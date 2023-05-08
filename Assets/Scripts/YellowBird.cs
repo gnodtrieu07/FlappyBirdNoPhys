@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -18,18 +19,16 @@ public class YellowBird : MonoBehaviour
     private float birdRadius = 0.25f;
     private float pipeRadius = 0.5f;
 
-    public float pipeOffset = 2f;
-    public float pipeHeight = 2f;
-
+    PipeSpawnTest pipeSpawnTest;
+    PipeMove pipeMove;
+    public Transform birdTransform;
+    public float pipeX = 0f;
+    public float pipeXS;
+    public float pipeXE;
+    
     //Ngưỡng khoảng cách cho phép giữa chim và ống trước khi xem như có va chạm.
     private float distanceThreshold = 0.1f;
-/*
-    float birdX = bird.position.x;
-    float birdY = bird.position.y;
-    float pipe1X = pipe1.position.x;
-    float pipe1Y = pipe1.position.y;
-    float pipe2X = pipe2.position.x;
-    float pipe2Y = pipe2.position.y;*/
+
 
 
 
@@ -54,14 +53,11 @@ public class YellowBird : MonoBehaviour
         {
             return;
         }
-        //CheckSafeZone();
-        //IsBetweenPipes();
-        CheckCollisionByDistance();
-        DropGround();
-       
+        Check();
+        //CheckCollisionByDistance();
+        //DropGround();
+
     }
-
-
     void CheckCollisionByDistance()
     {
         GameObject[] pipes = GameObject.FindGameObjectsWithTag("Pipe");
@@ -82,24 +78,46 @@ public class YellowBird : MonoBehaviour
             //kiểm tra xem khoảng cách có bé hơn tổng bán kính cộng với distanceThreshold
             if (distance > totalDistance)
             {
-                Debug.Log("Error");
+                //Debug.Log("Error");
             }
-            else if(distance < totalDistance)
+            else if (distance < totalDistance)
             {
                 isDead = true;
                 Debug.Log("Collision detected!");
                 gameActive.GameOver();
             }
         }
-    }
-    void DropGround()
-    {
-        if(yellow.transform.position.y < 3.5)
+
+        if (yellow.transform.position.y < -3.5)
         {
             Debug.Log("Dead");
             gameActive.GameOver();
             Time.timeScale = 0;
         }
+    }
+
+    void Check()
+    {
+        if (Mathf.Abs(birdTransform.position.x - pipeX) < pipeSpawnTest.pipeWidth / 2)
+        {
+            // Nếu con chim đang nằm trong phạm vi cống, ta xử lý va chạm
+            HandleCollision();
+        }
+        if (birdTransform.position.x > pipeX - pipeMove.pipeWidth / 2 - pipeSpawnTest.safeZoneWidth && birdTransform.position.x < pipeX + pipeSpawnTest.pipeWidth / 2 + pipeSpawnTest.safeZoneWidth)
+        {
+            // Nếu con chim đang nằm trong vùng an toàn, ta hiển thị thông báo "An toàn!"
+            Debug.Log("An toàn!");
+        }
+    }
+
+    // Xử lý va chạm giữa con chim và cống
+    void HandleCollision()
+    {
+        // Đánh dấu trạng thái chết của con chim
+        isDead = true;
+
+        // Hiển thị thông báo game over
+        Debug.Log("Game over!");
     }
 }
 

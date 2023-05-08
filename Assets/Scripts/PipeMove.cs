@@ -10,6 +10,7 @@ public class PipeMove : MonoBehaviour
     public float pipeHeight;
     public float radius;
     public float pipeWidth;
+    public float safeZoneWidth = 0.2f;
 
     // Start is called before the first frame update
     void Start()
@@ -26,25 +27,11 @@ public class PipeMove : MonoBehaviour
         scale.x = pipeWidth;
         transform.localScale = scale;
 
-/*
-        //Đặt vị trí của các đối tượng top and bot để khớp với chiều rộng mới
-        Transform upperPipe = transform.Find("UpperPipe");
-        Transform lowerPipe = transform.Find("LowerPipe");
-
-        //Di chuyển các đường ống đến các cạnh của đối tượng gốc ban đầu dựa trên chiều rộng mới
-        upperPipe.localPosition = new Vector3(0, -width / 2, 0);
-        lowerPipe.localPosition = new Vector3(0, width / 2, 0);*/
+        // Update is called once per frame
+        void Update()
+        {
+            // Di chuyển ống sang trái với tốc độ 
+            transform.position += Vector3.left * speedPipe * Time.deltaTime;
+        }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // Di chuyển ống sang trái với tốc độ 
-        transform.position += Vector3.left * speedPipe * Time.deltaTime;
-    }
-/*    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, PipeRadius);
-    }*/
 }

@@ -660,8 +660,11 @@ MonoBehaviour:
   gravity: 9.8
   verticalVelocity: 0
   gameActive: {fileID: 919326569}
-  pipeOffset: 150
-  pipeHeight: 400
+  yellow: {fileID: 1107732133}
+  birdTransform: {fileID: 1107732137}
+  pipeX: 0
+  pipeXS: 0
+  pipeXE: 0
 --- !u!95 &1107732135
 Animator:
   serializedVersion: 5
@@ -742,8 +745,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1107732133}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 0.6, z: 0}
-  m_LocalScale: {x: 3.2624998, y: 3.5625, z: 3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
