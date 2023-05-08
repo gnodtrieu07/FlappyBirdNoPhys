@@ -6,32 +6,23 @@ public class PipeMove : MonoBehaviour
 {
 
     [SerializeField] float speedPipe;
-    public float pipeOffset;
-    public float pipeHeight;
-    public float radius;
     public float pipeWidth;
-    public float safeZoneWidth = 0.2f;
 
     // Start is called before the first frame update
     void Start()
     {
-        SetWidth(pipeWidth);
-        //pipeWidth = GetComponent<SpriteRenderer>().bounds.size.x;
+
     }
-    public void SetWidth(float width)
+    void Update()
     {
-        pipeWidth = width;
-
-        //Đặt tỷ lệ của đường ống để phù hợp với chiều rộng
-        Vector3 scale = transform.localScale;
-        scale.x = pipeWidth;
-        transform.localScale = scale;
-
-        // Update is called once per frame
-        void Update()
+        // Di chuyển ống sang trái với tốc độ 
+        transform.position += Vector3.left * speedPipe * Time.deltaTime;
+        if(transform.localPosition.x <= -4.0f)
         {
-            // Di chuyển ống sang trái với tốc độ 
-            transform.position += Vector3.left * speedPipe * Time.deltaTime;
+            Vector2 vector2 = transform.localPosition;
+            vector2.x = 8.0f;
+            vector2.y = Random.Range(-2.5f,3.0f);
+            transform.localPosition = vector2;
         }
     }
-}
+ }

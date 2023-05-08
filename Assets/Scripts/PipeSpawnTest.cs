@@ -5,7 +5,7 @@ using UnityEngine;
 public class PipeSpawnTest : MonoBehaviour
 {
     public GameObject pipePrefab;
-    public int numberOfPipes = 3;
+    public int numberOfPipes = 4;
     public float distanceBetweenPipes = 15f;
     public float pipeWidth = 2f;
     public float spawnXPosition = 15f;

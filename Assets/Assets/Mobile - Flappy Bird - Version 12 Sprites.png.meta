@@ -44,7 +44,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -1848,7 +1848,7 @@ TextureImporter:
       Mobile - Flappy Bird - Version 12 Sprites_61: 972344923
       Mobile - Flappy Bird - Version 12 Sprites_19: -1062781229
       Mobile - Flappy Bird - Version 12 Sprites_1: 282045242
-      Mobile - Flappy Bird - Version 12 Sprites_32: 1244255883
+      Mobile - Flappy Bird - Version 12 Sprites_44: 845682778
       Mobile - Flappy Bird - Version 12 Sprites_60: -1939172983
       Mobile - Flappy Bird - Version 12 Sprites_52: -1890485236
       Mobile - Flappy Bird - Version 12 Sprites_10: 584818502
@@ -1856,8 +1856,8 @@ TextureImporter:
       Mobile - Flappy Bird - Version 12 Sprites_26: 866906882
       Mobile - Flappy Bird - Version 12 Sprites_46: -396372959
       Mobile - Flappy Bird - Version 12 Sprites_77: 1223844912
-      Mobile - Flappy Bird - Version 12 Sprites_44: 845682778
       Mobile - Flappy Bird - Version 12 Sprites_41: 316719507
+      Mobile - Flappy Bird - Version 12 Sprites_32: 1244255883
       Mobile - Flappy Bird - Version 12 Sprites_21: -2108449364
       Mobile - Flappy Bird - Version 12 Sprites_31: -1292960285
       Mobile - Flappy Bird - Version 12 Sprites_25: 626546262

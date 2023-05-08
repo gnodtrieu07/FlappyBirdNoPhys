@@ -13,26 +13,45 @@ public class YellowBird : MonoBehaviour
     //verticalVelocity để lưu trữ vận tốc theo chiều dọc
     [SerializeField] float verticalVelocity = 0f;
     [SerializeField] GameActive gameActive;
+
+    [SerializeField] Transform[] pipesPos;
+    Transform temp;
+    int index = 0;
+
     public GameObject yellow;
     //PipeSpawner pipeSpawner;
     private bool isDead = false;
-    private float birdRadius = 0.25f;
-    private float pipeRadius = 0.5f;
-
-    PipeSpawnTest pipeSpawnTest;
-    PipeMove pipeMove;
-    public Transform birdTransform;
-    public float pipeX = 0f;
-    public float pipeXS;
-    public float pipeXE;
+   /* private float birdRadius = 0.25f;
+    private float pipeRadius = 0.5f;*/
     
     //Ngưỡng khoảng cách cho phép giữa chim và ống trước khi xem như có va chạm.
     private float distanceThreshold = 0.1f;
 
-
-
+    private void Start()
+    {
+        temp = pipesPos[index];
+    }
 
     void Update()
+    {
+        // Nếu đã chết thì ko cập nhật nữa
+        if (isDead)
+        {
+            return;
+        }
+
+        if(temp.localPosition.x <= -2.0f)
+        {
+            index += 1;
+            temp = pipesPos[index % 4];
+        }
+
+        //Debug.Log(index);
+        BirdMove();
+        BirdCheckCollision();
+    }
+
+    void BirdMove()
     {
         // Xử lý khi nhấn phím để chim nhảy lên
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
@@ -47,18 +66,38 @@ public class YellowBird : MonoBehaviour
         // Cập nhật gia tốc và vận tốc
         // Tính toán gia tốc bằng cách giảm verticalVelocity theo thời gian.
         verticalVelocity -= gravity * Time.deltaTime;
-
-        // Nếu đã chết thì ko cập nhật nữa
-        if (isDead)
-        {
-            return;
-        }
-        Check();
-        //CheckCollisionByDistance();
-        //DropGround();
-
     }
-    void CheckCollisionByDistance()
+
+    void BirdCheckCollision()
+    {
+        if(temp.position.x <= -0.4f && temp.position.x >= -1.5f)
+        {
+            if(transform.position.y >= temp.position.y + 1.3f || transform.position.y <= temp.position.y - 1.3f)
+            {
+                Debug.Log("Die");
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*void CheckCollisionByDistance()
     {
         GameObject[] pipes = GameObject.FindGameObjectsWithTag("Pipe");
 
@@ -94,31 +133,7 @@ public class YellowBird : MonoBehaviour
             gameActive.GameOver();
             Time.timeScale = 0;
         }
-    }
-
-    void Check()
-    {
-        if (Mathf.Abs(birdTransform.position.x - pipeX) < pipeSpawnTest.pipeWidth / 2)
-        {
-            // Nếu con chim đang nằm trong phạm vi cống, ta xử lý va chạm
-            HandleCollision();
-        }
-        if (birdTransform.position.x > pipeX - pipeMove.pipeWidth / 2 - pipeSpawnTest.safeZoneWidth && birdTransform.position.x < pipeX + pipeSpawnTest.pipeWidth / 2 + pipeSpawnTest.safeZoneWidth)
-        {
-            // Nếu con chim đang nằm trong vùng an toàn, ta hiển thị thông báo "An toàn!"
-            Debug.Log("An toàn!");
-        }
-    }
-
-    // Xử lý va chạm giữa con chim và cống
-    void HandleCollision()
-    {
-        // Đánh dấu trạng thái chết của con chim
-        isDead = true;
-
-        // Hiển thị thông báo game over
-        Debug.Log("Game over!");
-    }
+    }*/
 }
 
 
