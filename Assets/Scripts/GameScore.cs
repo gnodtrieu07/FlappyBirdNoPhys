@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameScore : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class GameScore : MonoBehaviour
 
     void Start()
     {
-        
+        score = 0;
     }
 
     void Update()

@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class YellowBird : MonoBehaviour
 {
@@ -12,20 +14,19 @@ public class YellowBird : MonoBehaviour
     [SerializeField] float gravity = 9.8f;
     //verticalVelocity để lưu trữ vận tốc theo chiều dọc
     [SerializeField] float verticalVelocity = 0f;
+
     [SerializeField] GameActive gameActive;
+    public TextMeshProUGUI scorePro;
 
     [SerializeField] Transform[] pipesPos;
     Transform temp;
     int index = 0;
 
+    private int score = 0;
     public GameObject yellow;
     //PipeSpawner pipeSpawner;
     private bool isDead = false;
-   /* private float birdRadius = 0.25f;
-    private float pipeRadius = 0.5f;*/
     
-    //Ngưỡng khoảng cách cho phép giữa chim và ống trước khi xem như có va chạm.
-    private float distanceThreshold = 0.1f;
 
     private void Start()
     {
@@ -40,13 +41,13 @@ public class YellowBird : MonoBehaviour
             return;
         }
 
-        if(temp.localPosition.x <= -2.0f)
+        if(temp.localPosition.x <= -1.0f)
         {
             index += 1;
             temp = pipesPos[index % 4];
+            scorePro.text = "" + index.ToString();
         }
-
-        //Debug.Log(index);
+        Debug.Log(index);
         BirdMove();
         BirdCheckCollision();
     }
@@ -70,12 +71,16 @@ public class YellowBird : MonoBehaviour
 
     void BirdCheckCollision()
     {
-        if(temp.position.x <= -0.4f && temp.position.x >= -1.5f)
+        if(temp.position.x <= 0.6f && temp.position.x >= -0.6f)
         {
-            if(transform.position.y >= temp.position.y + 1.3f || transform.position.y <= temp.position.y - 1.3f)
+            if (transform.position.y >= temp.position.y + 1.3f || transform.position.y <= temp.position.y - 1.3f)
             {
-                Debug.Log("Die");
+                gameActive.GameOver();
             }
+        }
+        if(transform.position.y < -3.5)
+        {
+            gameActive.GameOver();
         }
     }
 
