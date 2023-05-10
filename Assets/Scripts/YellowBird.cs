@@ -48,6 +48,7 @@ public class YellowBird : MonoBehaviour
             scorePro.text = "" + index.ToString();
         }
         Debug.Log(index);
+
         BirdMove();
         BirdCheckCollision();
     }

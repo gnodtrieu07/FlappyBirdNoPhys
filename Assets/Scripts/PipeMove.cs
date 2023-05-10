@@ -17,6 +17,8 @@ public class PipeMove : MonoBehaviour
     {
         // Di chuyển ống sang trái với tốc độ 
         transform.position += Vector3.left * speedPipe * Time.deltaTime;
+        //Debug.Log(Time.deltaTime);
+
         if(transform.localPosition.x <= -4.0f)
         {
             Vector2 vector2 = transform.localPosition;
@@ -25,4 +27,4 @@ public class PipeMove : MonoBehaviour
             transform.localPosition = vector2;
         }
     }
- }
+}
