@@ -15,7 +15,7 @@ public class YellowBird : MonoBehaviour
     //verticalVelocity để lưu trữ vận tốc theo chiều dọc
     [SerializeField] float verticalVelocity = 0f;
 
-    [SerializeField] GameActive gameActive;
+    [SerializeField] GameManager gameManager;
     public TextMeshProUGUI scorePro;
 
     [SerializeField] Transform[] pipesPos;
@@ -76,12 +76,12 @@ public class YellowBird : MonoBehaviour
         {
             if (transform.position.y >= temp.position.y + 1.3f || transform.position.y <= temp.position.y - 1.3f)
             {
-                gameActive.GameOver();
+                gameManager.GameOver();
             }
         }
         if(transform.position.y < -3.5)
         {
-            gameActive.GameOver();
+            gameManager.GameOver();
         }
     }
 
@@ -100,46 +100,6 @@ public class YellowBird : MonoBehaviour
 
 
 
-
-
-
-    /*void CheckCollisionByDistance()
-    {
-        GameObject[] pipes = GameObject.FindGameObjectsWithTag("Pipe");
-
-        foreach (GameObject pipe in pipes)
-        {
-            Vector3 birdPos = transform.position;
-            Vector3 pipePos = pipe.transform.position;
-
-            //lấy tọa độ của chim và ống sau đó tính khoảng cách giữa 2 cái bằng hàm Vector3.Distance
-            float distance = Vector3.Distance(birdPos, pipePos);
-
-            // tính tổng bán kính của chim và ống
-            float radiusSum = birdRadius + pipeRadius;
-
-            float totalDistance = radiusSum + distanceThreshold;
-
-            //kiểm tra xem khoảng cách có bé hơn tổng bán kính cộng với distanceThreshold
-            if (distance > totalDistance)
-            {
-                //Debug.Log("Error");
-            }
-            else if (distance < totalDistance)
-            {
-                isDead = true;
-                Debug.Log("Collision detected!");
-                gameActive.GameOver();
-            }
-        }
-
-        if (yellow.transform.position.y < -3.5)
-        {
-            Debug.Log("Dead");
-            gameActive.GameOver();
-            Time.timeScale = 0;
-        }
-    }*/
 }
 
 
