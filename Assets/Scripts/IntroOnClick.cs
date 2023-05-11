@@ -11,6 +11,7 @@ public class IntroOnClick : MonoBehaviour
     {
         // Ẩn panel khi bắt đầu game
         startPanel.SetActive(true);
+        Time.timeScale = 0;
     }
 
     private void Update()
@@ -26,6 +27,7 @@ public class IntroOnClick : MonoBehaviour
 
     private void StartGame()
     {
+        Time.timeScale = 1;
         Debug.Log("Start");
     }
 }

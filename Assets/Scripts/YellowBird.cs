@@ -22,15 +22,16 @@ public class YellowBird : MonoBehaviour
     Transform temp;
     int index = 0;
 
-    private int score = 0;
     public GameObject yellow;
     //PipeSpawner pipeSpawner;
     private bool isDead = false;
-    
+    private bool isStart = false;
 
     private void Start()
     {
         temp = pipesPos[index];
+        transform.position = Vector2.zero;
+        isStart = false;
     }
 
     void Update()
@@ -40,17 +41,16 @@ public class YellowBird : MonoBehaviour
         {
             return;
         }
-
+        
         if(temp.localPosition.x <= -1.0f)
         {
             index += 1;
             temp = pipesPos[index % 4];
             scorePro.text = "" + index.ToString();
         }
-        Debug.Log(index);
-
         BirdMove();
         BirdCheckCollision();
+        
     }
 
     void BirdMove()
@@ -59,11 +59,15 @@ public class YellowBird : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             verticalVelocity = jumpForce;
+            isStart = true;
         }
         // Cập nhật vị trí của chim dựa trên Vertvelocity
-        Vector2 position = transform.position;
-        position.y += verticalVelocity * Time.deltaTime;
-        transform.position = position;
+        if (isStart)
+        {
+            Vector2 position = transform.position;
+            position.y += verticalVelocity * Time.deltaTime;
+            transform.position = position;
+        }
 
         // Cập nhật gia tốc và vận tốc
         // Tính toán gia tốc bằng cách giảm verticalVelocity theo thời gian.
