@@ -16,22 +16,34 @@ public class YellowBird : MonoBehaviour
     [SerializeField] float verticalVelocity = 0f;
 
     [SerializeField] GameManager gameManager;
-    public TextMeshProUGUI scorePro;
+    [SerializeField] TextMeshProUGUI scorePro;
+
 
     [SerializeField] Transform[] pipesPos;
-    Transform temp;
-    int index = 0;
 
-    public GameObject yellow;
-    //PipeSpawner pipeSpawner;
+    [SerializeField] RuntimeAnimatorController[] birds;
+    [SerializeField] Animator animatorControllers;
+
+    Transform temp;
+    public int index { get; set; }
+
+    
     private bool isDead = false;
-    private bool isStart = false;
+    public bool isStart { get; set; }
+
+    private void Awake()
+    {
+        index = 0;
+        ConvertBird();
+    }
 
     private void Start()
     {
         temp = pipesPos[index];
         transform.position = Vector2.zero;
         isStart = false;
+
+        Debug.Log(PlayerPrefs.GetInt("Option"));
     }
 
     void Update()
@@ -39,6 +51,7 @@ public class YellowBird : MonoBehaviour
         // Nếu đã chết thì ko cập nhật nữa
         if (isDead)
         {
+            scorePro.text = "";
             return;
         }
         
@@ -52,7 +65,7 @@ public class YellowBird : MonoBehaviour
         BirdCheckCollision();
         
     }
-
+    
     void BirdMove()
     {
         // Xử lý khi nhấn phím để chim nhảy lên
@@ -89,20 +102,22 @@ public class YellowBird : MonoBehaviour
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    private void ConvertBird()
+    {
+        int index = PlayerPrefs.GetInt("Option");
+        switch (index)
+        {
+            case 0:
+                animatorControllers.runtimeAnimatorController = birds[0];
+                break;
+            case 1:
+                animatorControllers.runtimeAnimatorController = birds[1];
+                break;
+            case 2:
+                animatorControllers.runtimeAnimatorController = birds[2];
+                break;
+        }
+    }
 
 }
 
