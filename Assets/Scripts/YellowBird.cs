@@ -29,8 +29,11 @@ public class YellowBird : MonoBehaviour
     private bool isCooldown = false;
     private float cooldownDuration = 5f;
     private float cooldownTimer = 0f;
-    [SerializeField] Image cooldownCircle; 
+    [SerializeField] Image cooldownCircle;
 
+    [SerializeField] AudioClip jumpSound;
+    [SerializeField] AudioClip gameOverSound;
+    [SerializeField] AudioClip scoreSound;
 
     public int index { get; set; }
 
@@ -66,6 +69,7 @@ public class YellowBird : MonoBehaviour
         {
             index += 1;
             temp = pipesPos[index % 4];
+            SoundManager.instance.PlaySound(scoreSound);
             scorePro.text = "" + index.ToString();
         }
 
@@ -81,6 +85,7 @@ public class YellowBird : MonoBehaviour
         {
             verticalVelocity = jumpForce;
             isStart = true;
+            SoundManager.instance.PlaySound(jumpSound);
         }
         // Cập nhật vị trí của chim dựa trên Vertvelocity
         if (isStart)
@@ -101,11 +106,13 @@ public class YellowBird : MonoBehaviour
         {
             if (transform.position.y >= temp.position.y + 1.3f || transform.position.y <= temp.position.y - 1.3f)
             {
+                SoundManager.instance.PlaySound(gameOverSound);
                 gameManager.GameOver();
             }
         }
         if (transform.position.y < -3.5)
         {
+            SoundManager.instance.PlaySound(gameOverSound);
             gameManager.GameOver();
         }
     }
