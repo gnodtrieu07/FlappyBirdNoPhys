@@ -179,6 +179,10 @@ PrefabInstance:
       value: Background
       objectReference: {fileID: 0}
     - target: {fileID: 5023394728117426778, guid: 513749ef563d2ea4e8c8f04ed3e9bd08, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5023394728117426778, guid: 513749ef563d2ea4e8c8f04ed3e9bd08, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0
       objectReference: {fileID: 0}
@@ -561,7 +565,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -2.6428, y: -310}
+  m_AnchoredPosition: {x: -2.6428223, y: -310}
   m_SizeDelta: {x: 974.4238, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &948291466
@@ -632,8 +636,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverUI: {fileID: 0}
-  score: 0
-  highScore: 0
+  presentScore: {fileID: 0}
+  bestScore: {fileID: 0}
+  yellowBird: {fileID: 0}
 --- !u!4 &1152568956
 Transform:
   m_ObjectHideFlags: 0

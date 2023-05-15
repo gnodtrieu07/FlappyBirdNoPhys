@@ -3,9 +3,9 @@ using UnityEngine.UI;
 
 public class MoveBackground : MonoBehaviour
 {
-    public float speed = 0.5f; // Tốc độ di chuyển của background
-    private RawImage rawImage; // Biến lưu trữ component Raw Image của GameObject
-    private Rect rect; // Biến lưu trữ UV Rect của hình ảnh
+    [SerializeField] float speed = 0.5f; // Tốc độ di chuyển của background
+    private RawImage rawImage; 
+    private Rect rect; 
 
     void Start()
     {

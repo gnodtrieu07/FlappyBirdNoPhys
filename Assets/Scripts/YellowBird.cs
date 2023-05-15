@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class YellowBird : MonoBehaviour
 {
@@ -20,14 +21,19 @@ public class YellowBird : MonoBehaviour
 
 
     [SerializeField] Transform[] pipesPos;
+    Transform temp;
 
     [SerializeField] RuntimeAnimatorController[] birds;
     [SerializeField] Animator animatorControllers;
 
-    Transform temp;
+    private bool isCooldown = false;
+    private float cooldownDuration = 5f;
+    private float cooldownTimer = 0f;
+    [SerializeField] Image cooldownCircle; 
+
+
     public int index { get; set; }
 
-    
     private bool isDead = false;
     public bool isStart { get; set; }
 
@@ -44,7 +50,7 @@ public class YellowBird : MonoBehaviour
         isStart = false;
 
         Debug.Log(PlayerPrefs.GetInt("Option"));
-    }
+    } 
 
     void Update()
     {
@@ -52,20 +58,22 @@ public class YellowBird : MonoBehaviour
         if (isDead)
         {
             scorePro.text = "";
+            cooldownCircle.gameObject.SetActive(false);
             return;
         }
-        
-        if(temp.localPosition.x <= -1.0f)
+
+        if (temp.localPosition.x <= -1.0f)
         {
             index += 1;
             temp = pipesPos[index % 4];
             scorePro.text = "" + index.ToString();
         }
+
         BirdMove();
+        SlowMotion();
         BirdCheckCollision();
-        
     }
-    
+
     void BirdMove()
     {
         // Xử lý khi nhấn phím để chim nhảy lên
@@ -89,14 +97,14 @@ public class YellowBird : MonoBehaviour
 
     void BirdCheckCollision()
     {
-        if(temp.position.x <= 0.6f && temp.position.x >= -0.6f)
+        if (temp.position.x <= 0.6f && temp.position.x >= -0.6f)
         {
             if (transform.position.y >= temp.position.y + 1.3f || transform.position.y <= temp.position.y - 1.3f)
             {
                 gameManager.GameOver();
             }
         }
-        if(transform.position.y < -3.5)
+        if (transform.position.y < -3.5)
         {
             gameManager.GameOver();
         }
@@ -119,6 +127,45 @@ public class YellowBird : MonoBehaviour
         }
     }
 
+    private void SlowMotion()
+    {
+        if (isCooldown)
+        {
+            cooldownTimer -= Time.deltaTime;
+
+            if (cooldownTimer <= 0f)
+            {
+                isCooldown = false;
+                cooldownCircle.fillAmount = 0f;
+            }
+            else
+            {
+                float fillAmount = cooldownTimer / cooldownDuration;
+                cooldownCircle.fillAmount = fillAmount;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F) && PlayerPrefs.GetInt("Option") == 1 && !isCooldown)
+        {
+            StartCoroutine(ActivateSlowMotion());
+        }
+    }
+
+    private IEnumerator ActivateSlowMotion()
+    {
+        isCooldown = true;
+        cooldownTimer = cooldownDuration;
+
+        Time.timeScale = 0.2f; // Điều chỉnh timeScale để làm chậm
+
+        // Chờ vài giây để kỹ năng làm chậm kết thúc
+        yield return new WaitForSeconds(3f);
+
+        Time.timeScale = 1f; // Khôi phục lại timeScale bình thường
+
+        isCooldown = false;
+        cooldownCircle.fillAmount = 1f;
+    }
 }
 
 

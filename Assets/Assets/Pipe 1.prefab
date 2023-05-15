@@ -100,10 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedPipe: 0
-  pipeOffset: 0
-  pipeHeight: 0
-  radius: 0
-  pipeWidth: 0
+  yellowBird: {fileID: 0}
 --- !u!1 &7219211742706916498
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject gameOverUI;
     [SerializeField] TextMeshProUGUI presentScore;
     [SerializeField] TextMeshProUGUI bestScore;
-    //private BirdType selectedBirdType = BirdType.Yellow;
     [SerializeField] YellowBird yellowBird;
 
     private void Start()
@@ -46,4 +45,6 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Option", index);
     }
+
+
 }
