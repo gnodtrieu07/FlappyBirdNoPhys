@@ -160,6 +160,12 @@ public class YellowBird : MonoBehaviour
         }
     }
 
+    public void ThroughSkill()
+    {
+
+    }
+
+
     private IEnumerator ActivateSlowMotion()
     {
         isCooldown = true;
