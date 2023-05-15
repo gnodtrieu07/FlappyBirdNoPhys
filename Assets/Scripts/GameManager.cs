@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI presentScore;
     [SerializeField] TextMeshProUGUI bestScore;
     [SerializeField] YellowBird yellowBird;
+    [SerializeField] GameObject pauseMenu;
 
     private void Start()
     {
