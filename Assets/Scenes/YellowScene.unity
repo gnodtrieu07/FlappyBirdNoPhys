@@ -381,6 +381,7 @@ MonoBehaviour:
   jumpSound: {fileID: 8300000, guid: 6cbe1a35dc8d276469362cf334370407, type: 3}
   gameOverSound: {fileID: 8300000, guid: a7d95b332ab6f6141955e7127c6ef2ac, type: 3}
   scoreSound: {fileID: 8300000, guid: 2b42ffc509f18034897192aa0a927c95, type: 3}
+  slowSound: {fileID: 8300000, guid: ba19345dd6b574e48880285345f3a95d, type: 3}
 --- !u!95 &376576125
 Animator:
   serializedVersion: 5

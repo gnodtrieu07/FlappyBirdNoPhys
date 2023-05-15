@@ -34,6 +34,7 @@ public class YellowBird : MonoBehaviour
     [SerializeField] AudioClip jumpSound;
     [SerializeField] AudioClip gameOverSound;
     [SerializeField] AudioClip scoreSound;
+    [SerializeField] AudioClip slowSound;
 
     public int index { get; set; }
 
@@ -155,6 +156,7 @@ public class YellowBird : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F) && PlayerPrefs.GetInt("Option") == 1 && !isCooldown)
         {
             StartCoroutine(ActivateSlowMotion());
+            SoundManager.instance.PlaySound(slowSound);
         }
     }
 
