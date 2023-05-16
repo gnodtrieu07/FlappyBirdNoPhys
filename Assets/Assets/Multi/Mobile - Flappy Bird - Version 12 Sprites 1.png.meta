@@ -1222,12 +1222,12 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 56
-        y: 29
+        y: 30
         width: 26
         height: 160
       alignment: 7
       pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 5, y: 17, z: 5, w: 9}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -1248,7 +1248,7 @@ TextureImporter:
         height: 160
       alignment: 2
       pivot: {x: 0.5, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 5, y: 7, z: 4, w: 16}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -1888,8 +1888,8 @@ TextureImporter:
       Mobile - Flappy Bird - Version 12 Sprites_80: -469727803
       Mobile - Flappy Bird - Version 12 Sprites_75: -1898424253
       Mobile - Flappy Bird - Version 12 Sprites_61: 972344923
-      Mobile - Flappy Bird - Version 12 Sprites_19: -1062781229
       Mobile - Flappy Bird - Version 12 Sprites_1: 282045242
+      Mobile - Flappy Bird - Version 12 Sprites_19: -1062781229
       Mobile - Flappy Bird - Version 12 Sprites_44: 845682778
       Mobile - Flappy Bird - Version 12 Sprites_60: -1939172983
       Mobile - Flappy Bird - Version 12 Sprites_52: -1890485236

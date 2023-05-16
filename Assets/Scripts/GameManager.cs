@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI bestScore;
     [SerializeField] YellowBird yellowBird;
     [SerializeField] GameObject pauseMenu;
+    [SerializeField] TextMeshProUGUI scorePro;
 
     private void Start()
     {
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameOverUI.SetActive(true);
+        scorePro.text= string.Empty;
         Time.timeScale = 0;
 
 

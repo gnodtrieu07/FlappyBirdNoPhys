@@ -27,8 +27,15 @@ public class YellowBird : MonoBehaviour
     [SerializeField] Animator animatorControllers;
 
     private bool isCooldown = false;
+    private bool isSkillActive = false;
     private float cooldownDuration = 5f;
     private float cooldownTimer = 0f;
+
+    // Di chuyển chim qua cột trong một khoảng thời gian nhất định
+    private float movementDuration = 1.0f;
+    // Thời gian di chuyển đã trôi qua;
+    private float elapsedTime = 0;
+
     [SerializeField] Image cooldownCircle;
 
     [SerializeField] AudioClip jumpSound;
@@ -61,7 +68,8 @@ public class YellowBird : MonoBehaviour
         // Nếu đã chết thì ko cập nhật nữa
         if (isDead)
         {
-            scorePro.text = "";
+            scorePro.text = " ";
+            scorePro.gameObject.SetActive(false);
             cooldownCircle.gameObject.SetActive(false);
             return;
         }
@@ -76,6 +84,7 @@ public class YellowBird : MonoBehaviour
 
         BirdMove();
         SlowMotion();
+        ThroughSkill();
         BirdCheckCollision();
     }
 
@@ -135,20 +144,26 @@ public class YellowBird : MonoBehaviour
         }
     }
 
+    //Skill Slow
     private void SlowMotion()
     {
+
         if (isCooldown)
         {
+            //giảm giá trị cT dựa trên thời gian trôi qua cùa 2 fr (đếm ngược)
             cooldownTimer -= Time.deltaTime;
 
             if (cooldownTimer <= 0f)
             {
+                //kỹ năng off
                 isCooldown = false;
+                //vòng tròn hồi kỹ năng trống
                 cooldownCircle.fillAmount = 0f;
             }
             else
             {
                 float fillAmount = cooldownTimer / cooldownDuration;
+                //fillAmount cập nhật UI hồi kỹ năng với thời gian đã set
                 cooldownCircle.fillAmount = fillAmount;
             }
         }
@@ -160,9 +175,35 @@ public class YellowBird : MonoBehaviour
         }
     }
 
+    //Skill Through
     public void ThroughSkill()
     {
+        if(isSkillActive) 
+        {
+            elapsedTime -= Time.deltaTime;
 
+            if (cooldownTimer <= 0f)
+            {
+                //kỹ năng off
+                isSkillActive = false;
+                //vòng tròn hồi kỹ năng trống
+                cooldownCircle.fillAmount = 0f;
+            }
+            else
+            {
+                float fillAmount = cooldownTimer / cooldownDuration;
+                //fillAmount cập nhật UI hồi kỹ năng với thời gian đã set
+                cooldownCircle.fillAmount = fillAmount;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.D) && PlayerPrefs.GetInt("Option") == 2)
+        {
+            if (!isSkillActive)
+            {
+                StartCoroutine(ActivateSkill());
+                SoundManager.instance.PlaySound(slowSound);
+            }
+        }
     }
 
 
@@ -179,6 +220,39 @@ public class YellowBird : MonoBehaviour
         Time.timeScale = 1f; // Khôi phục lại timeScale bình thường
 
         isCooldown = false;
+        cooldownCircle.fillAmount = 1f;
+    }
+
+    private IEnumerator ActivateSkill()
+    {
+        // kỹ năng đang được kích hoạt
+        isSkillActive = true;
+
+        // Lưu vị trí ban đầu của chim
+        Vector3 presentPosition = transform.position;
+
+        while (elapsedTime < movementDuration)
+        {
+            // Tính toán vị trí mới của chim
+            float t = elapsedTime / movementDuration;
+            //di chuyển chim từ vị trí ban đầu đến vị trí mục tiêu với khoảng tg cố định 
+            Vector3 targetPosition = new Vector3(presentPosition.x + 1.2f, presentPosition.y, presentPosition.z);
+            //Lerp tính toán vị trí mới của chim dựa trên t 
+            transform.position = Vector3.Lerp(presentPosition, targetPosition, t);
+
+            // Cập nhật thời gian trôi qua
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+        // Đặt lại vị trí ban đầu của chim sau khi di chuyển hoàn thành
+        transform.position = presentPosition;
+
+        // Chờ một khoảng thời gian hồi kỹ năng
+        cooldownTimer = 3.0f; 
+        // Thời gian hồi kỹ năng (đơn vị: giây)
+        yield return new WaitForSeconds(cooldownTimer);
+        isSkillActive = false;
         cooldownCircle.fillAmount = 1f;
     }
 }

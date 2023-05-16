@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -1221,13 +1221,13 @@ TextureImporter:
       name: Mobile - Flappy Bird - Version 12 Sprites_53
       rect:
         serializedVersion: 2
-        x: 56
+        x: 57
         y: 29
-        width: 26
+        width: 24
         height: 160
       alignment: 7
       pivot: {x: 0.5, y: 0}
-      border: {x: 4, y: 18, z: 5, w: 0}
+      border: {x: 4, y: 21, z: 5, w: 4}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -1248,7 +1248,7 @@ TextureImporter:
         height: 160
       alignment: 2
       pivot: {x: 0.5, y: 1}
-      border: {x: 4, y: 0, z: 6, w: 15}
+      border: {x: 4, y: 6, z: 6, w: 18}
       outline: []
       physicsShape: []
       tessellationDetail: 0
