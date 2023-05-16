@@ -31,12 +31,8 @@ public class YellowBird : MonoBehaviour
     private float cooldownDuration = 5f;
     private float cooldownTimer = 0f;
 
-    // Di chuyển chim qua cột trong một khoảng thời gian nhất định
-    private float movementDuration = 1.0f;
-    // Thời gian di chuyển đã trôi qua;
-    private float elapsedTime = 0;
-
     [SerializeField] Image cooldownCircle;
+    [SerializeField] Image cooldownCircle2;
 
     [SerializeField] AudioClip jumpSound;
     [SerializeField] AudioClip gameOverSound;
@@ -112,18 +108,22 @@ public class YellowBird : MonoBehaviour
 
     void BirdCheckCollision()
     {
-        if (temp.position.x <= 0.6f && temp.position.x >= -0.6f)
+        // Kiểm tra va chạm khi kỹ năng không hoạt động
+        if (!isSkillActive)
         {
-            if (transform.position.y >= temp.position.y + 1.3f || transform.position.y <= temp.position.y - 1.3f)
+            if (temp.position.x <= 0.6f && temp.position.x >= -0.6f)
+            {
+                if (transform.position.y >= temp.position.y + 1.3f || transform.position.y <= temp.position.y - 1.3f)
+                {
+                    SoundManager.instance.PlaySound(gameOverSound);
+                    gameManager.GameOver();
+                }
+            }
+            if (transform.position.y < -3.5)
             {
                 SoundManager.instance.PlaySound(gameOverSound);
                 gameManager.GameOver();
             }
-        }
-        if (transform.position.y < -3.5)
-        {
-            SoundManager.instance.PlaySound(gameOverSound);
-            gameManager.GameOver();
         }
     }
 
@@ -134,12 +134,18 @@ public class YellowBird : MonoBehaviour
         {
             case 0:
                 animatorControllers.runtimeAnimatorController = birds[0];
+                cooldownCircle2.gameObject.SetActive(false);
+                cooldownCircle.gameObject.SetActive(false);
                 break;
             case 1:
                 animatorControllers.runtimeAnimatorController = birds[1];
+                cooldownCircle2.gameObject.SetActive(false);
+                cooldownCircle.gameObject.SetActive(true);
                 break;
             case 2:
                 animatorControllers.runtimeAnimatorController = birds[2];
+                cooldownCircle2.gameObject.SetActive(true);
+                cooldownCircle.gameObject.SetActive(false);
                 break;
         }
     }
@@ -162,6 +168,7 @@ public class YellowBird : MonoBehaviour
             }
             else
             {
+                //fillAmount là tỷ lệ thời gian còn lại trong cooldown so với tổng thời gian cooldown
                 float fillAmount = cooldownTimer / cooldownDuration;
                 //fillAmount cập nhật UI hồi kỹ năng với thời gian đã set
                 cooldownCircle.fillAmount = fillAmount;
@@ -178,29 +185,12 @@ public class YellowBird : MonoBehaviour
     //Skill Through
     public void ThroughSkill()
     {
-        if(isSkillActive) 
+        if (Input.GetKeyDown(KeyCode.D) && PlayerPrefs.GetInt("Option") == 2) 
         {
-            elapsedTime -= Time.deltaTime;
-
-            if (cooldownTimer <= 0f)
-            {
-                //kỹ năng off
-                isSkillActive = false;
-                //vòng tròn hồi kỹ năng trống
-                cooldownCircle.fillAmount = 0f;
-            }
-            else
-            {
-                float fillAmount = cooldownTimer / cooldownDuration;
-                //fillAmount cập nhật UI hồi kỹ năng với thời gian đã set
-                cooldownCircle.fillAmount = fillAmount;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.D) && PlayerPrefs.GetInt("Option") == 2)
-        {
-            if (!isSkillActive)
+            if(!isSkillActive)
             {
                 StartCoroutine(ActivateSkill());
+                StartCoroutine(ShowCooldownThrough());
                 SoundManager.instance.PlaySound(slowSound);
             }
         }
@@ -214,8 +204,8 @@ public class YellowBird : MonoBehaviour
 
         Time.timeScale = 0.2f; // Điều chỉnh timeScale để làm chậm
 
-        // Chờ vài giây để kỹ năng làm chậm kết thúc
-        yield return new WaitForSeconds(3f);
+        // Chờ 5 giây để kỹ năng làm chậm kết thúc
+        yield return new WaitForSeconds(5f);
 
         Time.timeScale = 1f; // Khôi phục lại timeScale bình thường
 
@@ -225,35 +215,53 @@ public class YellowBird : MonoBehaviour
 
     private IEnumerator ActivateSkill()
     {
-        // kỹ năng đang được kích hoạt
         isSkillActive = true;
 
         // Lưu vị trí ban đầu của chim
-        Vector3 presentPosition = transform.position;
+        Vector3 initialPosition = transform.position;
+
+        // Di chuyển chim qua cột trong một khoảng thời gian nhất định
+        float movementDuration = 1.0f; // Thời gian di chuyển (đơn vị: giây)
+        float elapsedTime = 0;
 
         while (elapsedTime < movementDuration)
         {
             // Tính toán vị trí mới của chim
             float t = elapsedTime / movementDuration;
-            //di chuyển chim từ vị trí ban đầu đến vị trí mục tiêu với khoảng tg cố định 
-            Vector3 targetPosition = new Vector3(presentPosition.x + 1.2f, presentPosition.y, presentPosition.z);
-            //Lerp tính toán vị trí mới của chim dựa trên t 
-            transform.position = Vector3.Lerp(presentPosition, targetPosition, t);
+            Vector3 targetPosition = new Vector3(initialPosition.x + 1.0f, initialPosition.y, initialPosition.z);
+            transform.position = Vector3.Lerp(initialPosition, targetPosition, t);
 
             // Cập nhật thời gian trôi qua
             elapsedTime += Time.deltaTime;
 
             yield return null;
         }
-        // Đặt lại vị trí ban đầu của chim sau khi di chuyển hoàn thành
-        transform.position = presentPosition;
+
+        // Đặt lại vị trí ban đầu của chim
+        transform.position = initialPosition;
 
         // Chờ một khoảng thời gian hồi kỹ năng
-        cooldownTimer = 3.0f; 
-        // Thời gian hồi kỹ năng (đơn vị: giây)
-        yield return new WaitForSeconds(cooldownTimer);
+        float skillCooldown = 5.0f; // Thời gian hồi kỹ năng (đơn vị: giây)
+        yield return new WaitForSeconds(skillCooldown);
         isSkillActive = false;
-        cooldownCircle.fillAmount = 1f;
+        cooldownCircle2.fillAmount = 1;
+    }
+    private IEnumerator ShowCooldownThrough()
+    {
+        float duration = 5.0f;
+        cooldownCircle2.gameObject.SetActive(true);
+        float timer = duration;
+
+        while (timer > 0)
+        {
+            // Cập nhật UI hồi kỹ năng
+            float fillAmount = timer / duration;
+            cooldownCircle2.fillAmount = fillAmount;
+
+            yield return null;
+            timer -= Time.deltaTime;
+        }
+        cooldownCircle2.fillAmount = 0;
     }
 }
 
