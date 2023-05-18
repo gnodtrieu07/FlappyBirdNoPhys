@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
+
 
 public class IntroOnClick : MonoBehaviour
 {
@@ -9,7 +7,7 @@ public class IntroOnClick : MonoBehaviour
 
     private void Start()
     {
-        Time.timeScale = 0;
+        Time.timeScale = 0f;
         startPanel.SetActive(true);
     }
 
@@ -26,6 +24,6 @@ public class IntroOnClick : MonoBehaviour
 
     private void StartGame()
     {
-        Time.timeScale = 1;
+        Time.timeScale = 1.0f;
     }
 }

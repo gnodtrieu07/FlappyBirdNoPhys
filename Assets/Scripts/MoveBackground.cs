@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class MoveBackground : MonoBehaviour
 {
-    [SerializeField] float speed = 0.5f; // Tốc độ di chuyển của background
+    [SerializeField] private float speed = 0.5f; // Tốc độ di chuyển của background
     private RawImage rawImage; 
     private Rect rect; 
 
@@ -14,7 +14,7 @@ public class MoveBackground : MonoBehaviour
         rawImage.texture.wrapMode = TextureWrapMode.Repeat;
 
         // Khởi tạo giá trị UV Rect mặc định
-        rect = new Rect(0, 0, 1, 1);
+        rect = new Rect(0f, 0f, 1.0f, 1.0f);
     }
 
     void Update()

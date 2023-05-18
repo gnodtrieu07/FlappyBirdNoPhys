@@ -1,27 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PipeMove : MonoBehaviour
 {
 
-    [SerializeField] float speedPipe;
-    [SerializeField] YellowBird yellowBird;
+    [SerializeField] private float speedPipe;
+    [SerializeField] private YellowBird yellowBird;
+    [SerializeField] private RedBird redBird;
+    [SerializeField] private BlueBird blueBird;
 
     void Start()
     {
         yellowBird.isStart = false;
+        redBird.isStart = false;
+        blueBird.isStart = false;
     }
     void Update()
     {
-/*        if (isStart || Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
-        {
-            // Di chuyển ống sang trái với tốc độ 
-            transform.position += Vector3.left * speedPipe * Time.deltaTime;
-            //Debug.Log(Time.deltaTime);
-        }*/
-        if(yellowBird.isStart)
+        if(yellowBird.isStart || redBird.isStart || blueBird.isStart)
         {
             transform.position += Vector3.left * speedPipe * Time.deltaTime;
 

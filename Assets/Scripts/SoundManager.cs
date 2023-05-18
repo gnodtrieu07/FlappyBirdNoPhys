@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
 
-    private AudioSource audioSource;
+    public AudioSource audioSource { get; set; }
 
     public void Awake()
     {
